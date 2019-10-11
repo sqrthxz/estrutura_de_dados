@@ -11,25 +11,43 @@ struct Patient
 typedef struct Patient patient;
 
 
-int insert(patient *origin, patient *p0);
-
-int remove_p(patient *origin, patient *p0);
-
-
-
-int print(patient *origin)
+int insert(patient *root, int c, char n[50])
 {
-  printf("Lista de Pacientes:\n");
+  patient *pNew = (patient*) malloc(sizeof(patient*));
+  pNew->code = c;
+  strcpy(pNew->name, n);
 
-  if(origin){
-    do{
-      printf("Cod: %d Nome: %s\n", origin->code, origin->name);
-      origin = origin->next;
+  while(1)
+    {
+    if(root->next == NULL)
+    {
+      root->next = pNew;
+      pNew->next = NULL;
+      break;
     }
-    while(origin);
+    root = root->next;
+  }
+}
+
+int remove_p(patient *root, int code_r){
+}
+
+
+int display(patient *root)
+{
+  printf("\nLista de Pacientes:\n\n");
+
+  printf("Cod: %d     Nome: %s\n", root->next->code, root->next->name);
+
+  if(root){
+    do{
+      printf("Cod: %d     Nome: %s\n", root->code, root->name);
+      root = root->next;
+    }
+    while(root);
   }
   else
-    printf("\nNao ha pacientes na fila.\n");
+    printf("\nNao ha pacientes na fila.\n\n");
 }
 
 
@@ -37,20 +55,46 @@ int print(patient *origin)
 int main(void)
 {
 
-  patient *p_origin = NULL;
+  //no de origem
+  patient *p_origin = (patient*) malloc(sizeof(patient*));
+  p_origin->code = 1;
+  p_origin->name = "Nadini";
 
 
-  p_origin= (patient*) malloc(sizeof(patient*));
-  p_origin->code = NULL;
-  p_origin->name = NULL;
-
-
+  printf("O que deseja fazer?\n\n");
 
   while(1)
   {
-    printf("O que deseja fazer?\n\n1- Inserir paciente\n2- Remover paciente\n3- Imprimir lista de pacientes\n4- Sair\n");
-    break;
+
+    int selector;
+    printf("\n1- Inserir paciente\n2- Remover paciente\n3- Imprimir lista de pacientes\n4- Sair\n\n");
+    scanf("%d", &selector);
+
+
+    //Inserir no na raiz
+    if(selector == 1)
+    {
+
+      int code_p;
+      char name_p[50];
+      printf("Digite o codigo e o nome do paciente:\n");
+      scanf("%d %s", &code_p, &name_p);
+
+      insert(p_origin, code_p, name_p);
+    }
+
+    if(selector == 3)
+    {
+      display(p_origin);
+    }
+
+    if(selector == 4)
+    {
+      break;
+    }
   }
 
-}
+  free(p_origin);
 
+  return 0;
+}
