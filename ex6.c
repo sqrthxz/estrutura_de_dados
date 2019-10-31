@@ -69,8 +69,30 @@ printf("\n");
   else
     printf("\nfila vazia\n\n");
 
+  printf("\n");
+
 }
 
+int removePilha(pifa *root_p, pifa *root_f)
+{
+
+  pifa *ultimo = root_f->next;
+  while (ultimo->next)
+  {
+    ultimo = ultimo->next;
+  }
+
+  pifa *p = root_p;
+  pifa *first = root_p;
+  while(p->next){
+    first = p;
+    p = p->next;
+    ultimo->next = p;
+  }
+
+  first->next = p->next;
+  p->next = NULL;
+}
 
 int main()
 {
@@ -82,8 +104,7 @@ int main()
     f_origin->val = 0;
 
     while(1){
-        printf("1- adicionar elementos\n2- remover da pilha e colocar na fila \n");
-        printf("3- remover da fila e colocar na pilha\n\n");
+        printf("1- Adicionar elementos\n2- Remover da PILHA e colocar na FILA \n3- Remover da FILA e colocar na PILHA\n\n");
 
         new_pifa(p_origin, f_origin, 2);
         new_pifa(p_origin, f_origin, -1);
@@ -94,9 +115,9 @@ int main()
         new_pifa(p_origin, f_origin, 6);
 
         display(p_origin, f_origin);
+        removePilha(p_origin, f_origin);
+        display(p_origin, f_origin);
 
         break;
     }
-
-
 }
