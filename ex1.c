@@ -7,51 +7,108 @@ typedef struct Node
     struct Node *next;
 }node;
 
-void newNode(node *root_p, int value)
+void insert(node *root, int tam)
 {
-    // new node
+  for(int i = 1; i < tam+1; i++){
     node *pNew = (node*) malloc(sizeof(node*));
-    pNew->val = value;
-    pNew->next = NULL;
+    pNew->val = i;
 
     while(1)
     {
-        if(root_p->next == NULL)
-        {
-            root_p->next = pNew;
-            pNew->next = NULL;
-            break;
-        }
-        root_p = root_p->next;
+      if(root->next == NULL)
+      {
+        root->next = pNew;
+        pNew->next = NULL;
+        break;
+      }
+    root = root->next;
     }
+  }
+
 }
 
-int display(node *root_p)
+int display(node *root)
 {
-    printf("Lista:\n");
-    root_p = root_p->next;
-    if(root_p){
+  root = root->next;
+  if(root){
     do{
-      printf(" %d ", root_p->val);
-      root_p = root_p->next;
+      printf(" %d ", root->val);
+      root = root->next;
     }
-    while(root_p);
-    }
-    else
-    printf("Lista vazia.\n");
-    root_p = root_p->next;
-
-printf("\n");
+    while(root);
+  }
+  else
+    printf("          Lista vazia.\n\n");
+  printf("\n");
 }
+
+void a(node *root)
+{
+    node *aux = root;
+    node *first = root->next;
+    node *last = root->next;
+    while(last->next)
+    {
+        last = last->next;
+    }
+    last->next = first;
+    aux->next = first->next;
+    first->next = NULL;
+}
+
+void b(node *root, int tam)
+{
+  for(int i = tam+1; i > 0; i--){
+    node *pNew = (node*) malloc(sizeof(node*));
+    pNew->val = i;
+
+    while(1)
+    {
+      if(root->next == NULL)
+      {
+        root->next = pNew;
+        pNew->next = NULL;
+        break;
+      }
+    root = root->next;
+    }
+  }
+
+}
+
+void c(node *root)
+{
+    
+}
+
 
 int main()
 {
     //root node
     node *p_origin = (node*) malloc(sizeof(node*));
     p_origin->val = NULL;
+    node *p = p_origin;
 
-    newNode(p_origin, 3);
-    display(p_origin);
+    insert(p, 6);
+
+    printf("Lista Principal: \n");
+    display(p);
+    printf("\n");
+
+    a(p);
+    printf("Lista 'A': \n");
+    display(p);
+    free(p);
+    printf("\n");
+
+    b(p,6);
+    printf("Lista 'B': \n");
+    display(p);
+    free(p);
+    printf("\n");
+
+
+    printf("Lista 'C': \n");
+
+
 }
-
-
