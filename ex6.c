@@ -43,37 +43,37 @@ void new_pifa(pifa *root_p, pifa *root_f, int value)
 
 int display(pifa *root_p, pifa *root_f)
 {
-    printf("pilha:\n ");
+    printf("Pilha:\n");
     root_p = root_p->next;
     if(root_p){
     do{
-      printf("%d ", root_p->val);
+      printf(" %d ", root_p->val);
       root_p = root_p->next;
     }
     while(root_p);
     }
     else
-    printf("\npilha vazia\n\n");
+    printf("Pilha vazia.\n");
     root_f = root_f->next;
 
 printf("\n");
 
-  printf("fila:\n");
+  printf("Fila:\n");
   if(root_f){
     do{
-      printf("%d ", root_f->val);
+      printf(" %d ", root_f->val);
       root_f = root_f->next;
     }
     while(root_f);
   }
   else
-    printf("\nfila vazia\n\n");
+    printf("Fila vazia.\n");
 
-  printf("\n");
+  printf("\n\n");
 
 }
 
-int removePilha(pifa *root_p, pifa *root_f)
+void removePilha(pifa *root_p, pifa *root_f)
 {
 
   pifa *ultimo = root_f->next;
@@ -94,6 +94,20 @@ int removePilha(pifa *root_p, pifa *root_f)
   p->next = NULL;
 }
 
+void removeFila(pifa *root_p, pifa *root_f)
+{
+    pifa *ultimo = root_p->next;
+    while (ultimo->next)
+    {
+        ultimo = ultimo->next;
+    }
+    pifa *f = root_f;
+    pifa *first = root_f->next;
+    ultimo->next= first;
+    f->next = first->next;
+    first->next = NULL;
+}
+
 int main()
 {
     //root node pilha
@@ -104,20 +118,29 @@ int main()
     f_origin->val = 0;
 
     while(1){
-        printf("1- Adicionar elementos\n2- Remover da PILHA e colocar na FILA \n3- Remover da FILA e colocar na PILHA\n\n");
-
-        new_pifa(p_origin, f_origin, 2);
-        new_pifa(p_origin, f_origin, -1);
-        new_pifa(p_origin, f_origin, 4);
-        new_pifa(p_origin, f_origin, 5);
-        new_pifa(p_origin, f_origin, -2);
-        new_pifa(p_origin, f_origin, -54);
-        new_pifa(p_origin, f_origin, 6);
-
-        display(p_origin, f_origin);
-        removePilha(p_origin, f_origin);
-        display(p_origin, f_origin);
-
-        break;
+        int i, j;
+        printf("1- Adicionar elementos\n2- Remover da PILHA e colocar na FILA \n3- Remover da FILA e colocar na PILHA\n4- Sair\n\n");
+        scanf("%d", &i);
+        if(i == 1)
+        {
+            printf("Digite o valor do no:\n");
+            scanf("%d", &j);
+            new_pifa(p_origin, f_origin, j);
+            printf("\n");
+            display(p_origin, f_origin);
+        }
+        if(i == 2)
+        {
+            removePilha(p_origin, f_origin);
+            display(p_origin, f_origin);
+        }
+        if(i == 3){
+            removeFila(p_origin, f_origin);
+            display(p_origin, f_origin);
+        }
+        if(i == 4)
+        {
+            break;
+        }
     }
 }
